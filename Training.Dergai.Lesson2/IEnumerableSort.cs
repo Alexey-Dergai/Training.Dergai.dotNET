@@ -8,6 +8,9 @@ namespace Training.Dergai.Lesson2
 {
     class IEnumerableSort
     {
-        
+        public static void sos()
+        {
+
+        }
     }
 }
