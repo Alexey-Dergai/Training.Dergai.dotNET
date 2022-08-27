@@ -13,7 +13,6 @@ namespace Training.Dergai.Lesson2
             Ascending,
             Descending
         }
-        // TODO: add enum with sort direction
         public static IEnumerable<T> Sort<T>(this IEnumerable<T> collection, SortDirection sortDirection) where T : IComparable<T>
         {
             var sortedCollection = collection.ToList();
