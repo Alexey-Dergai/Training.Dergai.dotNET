@@ -10,7 +10,7 @@ namespace Training.Dergai.Lesson4.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly string Path = @"D:\Education\.NET\Новая папка\Training.Dergay.Lesson1.Gdc\Training.Dergai.Lesson4\FileStorage\Employee.txt";
+        private readonly string Path = Directory.GetCurrentDirectory() + @"\Employee.txt";
 
         public void Add(Employee employee)
         {

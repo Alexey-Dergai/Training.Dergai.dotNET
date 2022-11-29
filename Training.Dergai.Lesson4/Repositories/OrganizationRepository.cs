@@ -10,7 +10,7 @@ namespace Training.Dergai.Lesson4.Repositories
 {
     public class OrganizationRepository : IOrganizationRepository
     {
-        private readonly string Path = @"D:\Education\.NET\Новая папка\Training.Dergay.Lesson1.Gdc\Training.Dergai.Lesson4\FileStorage\Organization.txt";
+        private readonly string Path = Directory.GetCurrentDirectory() + @"\Organization.txt";
 
         public void Add(Organization organization)
         {

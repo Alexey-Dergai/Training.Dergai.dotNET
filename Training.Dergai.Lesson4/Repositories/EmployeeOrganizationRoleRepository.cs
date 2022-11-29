@@ -12,7 +12,9 @@ namespace Training.Dergai.Lesson4.Repositories
 {
     public class EmployeeOrganizationRoleRepository : IEmployeeOrganizationRoleRepository
     {
-        private readonly string Path = @"D:\Education\.NET\Новая папка\Training.Dergay.Lesson1.Gdc\Training.Dergai.Lesson4\FileStorage\EmployeeOrganizationRole.txt";
+        
+        private readonly string Path = Directory.GetCurrentDirectory() + @"\EmployeeOrganizationRole.txt";
+        
 
         public void Add(EmployeeOrganizationRole employeeOrganizationRole)
         {
