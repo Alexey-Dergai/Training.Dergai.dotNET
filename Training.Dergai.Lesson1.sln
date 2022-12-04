@@ -21,9 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "RootCalculatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lesson4", "Lesson4", "{01C5BECF-8F9E-4241-85CC-4469AA357413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Dergai.Lesson4.Presentation", "Training.Dergai.Lesson4.Presentation\Training.Dergai.Lesson4.Presentation.csproj", "{63109119-64F0-4154-AC77-94AD99BC1537}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Dergai.Lesson4.Presentation", "Training.Dergai.Lesson4.Presentation\Training.Dergai.Lesson4.Presentation.csproj", "{63109119-64F0-4154-AC77-94AD99BC1537}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7AEA16F-48EA-4C5C-B06A-AED0EB53D374} = {C7AEA16F-48EA-4C5C-B06A-AED0EB53D374}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Dergai.Lesson4", "Training.Dergai.Lesson4\Training.Dergai.Lesson4.csproj", "{C7AEA16F-48EA-4C5C-B06A-AED0EB53D374}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Dergai.Lesson4", "Training.Dergai.Lesson4\Training.Dergai.Lesson4.csproj", "{C7AEA16F-48EA-4C5C-B06A-AED0EB53D374}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
