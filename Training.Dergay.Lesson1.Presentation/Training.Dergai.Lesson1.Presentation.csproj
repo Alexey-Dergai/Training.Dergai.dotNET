@@ -5,8 +5,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Training.Dergay\Training.Dergay.Lesson1.Gdc\Training.Dergai.Lesson1.csproj" />
-  </ItemGroup>
-
 </Project>
