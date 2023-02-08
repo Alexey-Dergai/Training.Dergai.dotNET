@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Training.Dergai.Lesson4.Models;
 using Training.Dergai.Lesson4.Repositories;
 using Training.Dergai.Lesson4.Services;
@@ -9,7 +10,7 @@ namespace Training.Dergai.Lesson4.Presentation
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IRoleRepository, RoleRepository>()
@@ -33,35 +34,36 @@ namespace Training.Dergai.Lesson4.Presentation
             var honda = new Organization { Name = "Honda Vtec" };
             var organizationService = serviceProvider.GetService<IOrganizationService>();
 
-            organizationService.CreateOrganization(organization);
-            organizationService.CreateOrganization(honda);
+            await organizationService.CreateOrganizationAsync(organization);
+            await organizationService.CreateOrganizationAsync(honda);
 
             var employee = new Employee { Name = "Korben Javas", Age = 21 };
             var jove = new Employee { Name = "Jove", Age = 222 };
             var employeeService = serviceProvider.GetService<IEmployeeService>();
 
-            employeeService.CreateEmployee(employee);
-            employeeService.CreateEmployee(jove);
+            await employeeService.CreateEmployeeAsync(employee);
+            await employeeService .CreateEmployeeAsync(jove);
 
-            var employees = employeeService.GetAllEmployees();
+            var employees = employeeService.GetAllEmployeesAsync();
 
             Console.WriteLine(JsonSerializer.Serialize(employees));
 
             jove.Age = 20;
 
-            employeeService.UpdateEmployee(jove);
+            await employeeService.UpdateEmployeeAsync(jove);
 
-            organizationService.AddEmployeeToOrganization(honda.Id, jove.Id, role.Id);
-            organizationService.AddEmployeeToOrganization(honda.Id, employee.Id, role.Id);
-            organizationService.AssignNewRole(honda.Id, jove.Id, manager.Id);
+            await organizationService.AddEmployeeToOrganizationAsync(honda.Id, jove.Id, role.Id);
+            await organizationService.AddEmployeeToOrganizationAsync(honda.Id, employee.Id, role.Id);
+            await organizationService.AssignNewRoleAsync(honda.Id, jove.Id, manager.Id);
 
-            var employeesForHonda = organizationService.GetEmployeesForOrganization(honda.Id);
+            var employeesForHonda = organizationService.GetEmployeesForOrganizationAsync(honda.Id);
 
             Console.WriteLine(JsonSerializer.Serialize(employeesForHonda));
 
-            organizationService.RemoveEmployeeFromOrganization(honda.Id, jove.Id);
+            await organizationService.RemoveEmployeeFromOrganizationAsync(honda.Id, jove.Id);
 
             Console.ReadKey();
         }
+
     }
 }

@@ -12,19 +12,19 @@ namespace Training.Dergai.Lesson4.Repositories
     {
         private readonly string Path = Directory.GetCurrentDirectory() + @"\Employee.txt";
 
-        public void Add(Employee employee)
+        public async Task AddAsync(Employee employee)
         {
             var json = JsonSerializer.Serialize(employee);
             
             using (var sw = new StreamWriter(Path, true))
             {
-                sw.WriteLine(json);
+                await sw.WriteLineAsync(json);
             }
         }
 
-        public void Remove(Employee employee)
+        public async Task RemoveAsync(Employee employee)
         {
-            var employees = GetAll();
+            var employees = await GetAllAsync();
 
             employees.RemoveAll(x => x.Id == employee.Id);
 
@@ -34,12 +34,12 @@ namespace Training.Dergai.Lesson4.Repositories
                 {
                     var json = JsonSerializer.Serialize(emp);
 
-                    sw.WriteLine(json);
+                    await sw.WriteLineAsync(json);
                 }
             }
         }
 
-        public List<Employee> GetAll()
+        public async Task<List<Employee>> GetAllAsync()
         {
             var employees = new List<Employee>();
 
@@ -47,7 +47,7 @@ namespace Training.Dergai.Lesson4.Repositories
             {
                 string line;
 
-                while ((line = sr.ReadLine()) != null)
+                while ((line = await sr.ReadLineAsync()) != null)
                 {
                     var employee = JsonSerializer.Deserialize<Employee>(line);
                    
@@ -59,9 +59,9 @@ namespace Training.Dergai.Lesson4.Repositories
             return employees;
         }
 
-        public void Update(Employee employee)
+        public async Task UpdateAsync(Employee employee)
         {
-            var employees = GetAll();
+            var employees = await GetAllAsync();
 
             employees.RemoveAll(x => x.Id == employee.Id);
             employees.Add(employee);
@@ -72,7 +72,7 @@ namespace Training.Dergai.Lesson4.Repositories
                 {
                     var json = JsonSerializer.Serialize(emp);
 
-                    sw.WriteLine(json);
+                    await sw.WriteLineAsync(json);
                 }
             }
         }

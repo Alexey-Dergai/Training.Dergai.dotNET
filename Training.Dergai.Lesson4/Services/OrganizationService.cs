@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Training.Dergai.Lesson4.Models;
 using Training.Dergai.Lesson4.Repositories;
 
@@ -24,7 +25,7 @@ namespace Training.Dergai.Lesson4.Services
 
         private IEmployeeOrganizationRoleRepository EmployeeOrganizationRoleRepository { get; }
 
-        public void AddEmployeeToOrganization(Guid organizationId, Guid employeeId, Guid roleId)
+        public async Task AddEmployeeToOrganizationAsync(Guid organizationId, Guid employeeId, Guid roleId)
         {
             var employeeOrgRole = new EmployeeOrganizationRole
             {
@@ -33,39 +34,38 @@ namespace Training.Dergai.Lesson4.Services
                 RoleId = roleId
             };
 
-            EmployeeOrganizationRoleRepository.Add(employeeOrgRole);
+            await EmployeeOrganizationRoleRepository.AddAsync(employeeOrgRole);
         }
 
-        public void AssignNewRole(Guid organizationId, Guid employeeId, Guid roleId)
+        public async Task AssignNewRoleAsync(Guid organizationId, Guid employeeId, Guid roleId)
         {
-            RemoveEmployeeFromOrganization(organizationId, employeeId);
-            AddEmployeeToOrganization(organizationId, employeeId, roleId);
+            await RemoveEmployeeFromOrganizationAsync(organizationId, employeeId);
+            await AddEmployeeToOrganizationAsync(organizationId, employeeId, roleId);
         }
 
-        public void CreateOrganization(Organization organization)
+        public async Task CreateOrganizationAsync(Organization organization)
         {
-            OrganizationRepository.Add(organization);
+            await OrganizationRepository.AddAsync(organization);
         }
 
-        public List<Employee> GetEmployeesForOrganization(Guid organizationId)
+        public async Task<List<Employee>> GetEmployeesForOrganizationAsync(Guid organizationId)
         {
-            var empOrgRoles = EmployeeOrganizationRoleRepository
-                .GetAll()
-                .FindAll(e => e.OrganizationId == organizationId);
-            var employees = EmployeeRepository
-                .GetAll()
-                .FindAll(emp => empOrgRoles.Select(e => e.EmployeeId).Contains(emp.Id));
+            var empOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
+            empOrgRoles.FindAll(e => e.OrganizationId == organizationId);
+            var employees = await EmployeeRepository.GetAllAsync();
+            employees.FindAll(emp => empOrgRoles.Select(e => e.EmployeeId).Contains(emp.Id));
 
             return employees;
         }
 
-        public void RemoveEmployeeFromOrganization(Guid organizationId, Guid employeeId)
+        public async Task RemoveEmployeeFromOrganizationAsync(Guid organizationId, Guid employeeId)
         {
-            var emplOrgRoles = EmployeeOrganizationRoleRepository.GetAll().FindAll(x => x.OrganizationId == organizationId && x.EmployeeId == employeeId);
+            var emplOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
+            emplOrgRoles.FindAll(x => x.OrganizationId == organizationId && x.EmployeeId == employeeId);
 
             foreach (var empOrgRole in emplOrgRoles)
             {
-                EmployeeOrganizationRoleRepository.Remove(empOrgRole);
+               await EmployeeOrganizationRoleRepository.RemoveAsync(empOrgRole);
             }
         }
     }

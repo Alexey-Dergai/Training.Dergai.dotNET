@@ -8,12 +8,12 @@ namespace Training.Dergai.Lesson4.Services
 {
     public interface IEmployeeService
     {
-        void CreateEmployee(Employee employee);
+        Task CreateEmployeeAsync(Employee employee);
 
-        void UpdateEmployee(Employee employee);
+        Task UpdateEmployeeAsync(Employee employee);
 
-        void RemoveEmployee(Employee employee);
+        Task RemoveEmployeeAsync(Employee employee);
 
-        List<Employee> GetAllEmployees();
+        Task<List<Employee>> GetAllEmployeesAsync();
     }
 }

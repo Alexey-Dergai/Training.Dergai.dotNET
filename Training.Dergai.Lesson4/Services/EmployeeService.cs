@@ -19,32 +19,32 @@ namespace Training.Dergai.Lesson4.Services
 
         private IEmployeeOrganizationRoleRepository EmployeeOrganizationRoleRepository { get; }
 
-        public void CreateEmployee(Employee employee)
+        public async Task CreateEmployeeAsync(Employee employee)
         {
-            EmployeeRepository.Add(employee);
+            await EmployeeRepository.AddAsync(employee);
         }
 
-        public List<Employee> GetAllEmployees()
+        public Task<List<Employee>> GetAllEmployeesAsync()
         {
-            return EmployeeRepository.GetAll();
+            return EmployeeRepository.GetAllAsync();
         }
 
-        public void RemoveEmployee(Employee employee)
+        public async Task RemoveEmployeeAsync(Employee employee)
         {
-            EmployeeRepository.Remove(employee);
+            await EmployeeRepository.RemoveAsync(employee);
 
-            var records = EmployeeOrganizationRoleRepository.GetAll();
+            var records = await EmployeeOrganizationRoleRepository.GetAllAsync();
             var recordsForEmployee = records.FindAll(x => x.EmployeeId == employee.Id);
 
             foreach (var rfe in recordsForEmployee)
             {
-                EmployeeOrganizationRoleRepository.Remove(rfe);
+                await EmployeeOrganizationRoleRepository.RemoveAsync(rfe);
             }
         }
 
-        public void UpdateEmployee(Employee employee)
+        public async Task UpdateEmployeeAsync(Employee employee)
         {
-            EmployeeRepository.Update(employee);
+            await EmployeeRepository.UpdateAsync(employee);
         }
     }
 }

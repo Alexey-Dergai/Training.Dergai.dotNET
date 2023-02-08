@@ -8,14 +8,14 @@ namespace Training.Dergai.Lesson4.Services
 {
     public interface IOrganizationService
     {
-        void CreateOrganization(Organization organization);
+        Task CreateOrganizationAsync(Organization organization);
 
-        List<Employee> GetEmployeesForOrganization(Guid organizationId);
+        Task<List<Employee>> GetEmployeesForOrganizationAsync(Guid organizationId);
 
-        void RemoveEmployeeFromOrganization(Guid organizationId, Guid employeeId);
+        Task RemoveEmployeeFromOrganizationAsync(Guid organizationId, Guid employeeId);
 
-        void AddEmployeeToOrganization(Guid organizationId, Guid employeeId, Guid roleId);
+        Task AddEmployeeToOrganizationAsync(Guid organizationId, Guid employeeId, Guid roleId);
 
-        void AssignNewRole(Guid organizationId, Guid employeeId, Guid roleId);
+        Task AssignNewRoleAsync(Guid organizationId, Guid employeeId, Guid roleId);
     }
 }
