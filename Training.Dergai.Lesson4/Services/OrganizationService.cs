@@ -51,7 +51,7 @@ namespace Training.Dergai.Lesson4.Services
         public async Task<List<Employee>> GetEmployeesForOrganizationAsync(Guid organizationId)
         {
             var empOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
-            empOrgRoles =  empOrgRoles.FindAll(e => e.OrganizationId == organizationId);
+            empOrgRoles = empOrgRoles.FindAll(e => e.OrganizationId == organizationId);
 
             var employees = await EmployeeRepository.GetAllAsync();
             employees = employees.FindAll(emp => empOrgRoles.Select(e => e.EmployeeId).Contains(emp.Id));
