@@ -51,9 +51,10 @@ namespace Training.Dergai.Lesson4.Services
         public async Task<List<Employee>> GetEmployeesForOrganizationAsync(Guid organizationId)
         {
             var empOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
-            empOrgRoles.FindAll(e => e.OrganizationId == organizationId);
+            empOrgRoles =  empOrgRoles.FindAll(e => e.OrganizationId == organizationId);
+
             var employees = await EmployeeRepository.GetAllAsync();
-            employees.FindAll(emp => empOrgRoles.Select(e => e.EmployeeId).Contains(emp.Id));
+            employees = employees.FindAll(emp => empOrgRoles.Select(e => e.EmployeeId).Contains(emp.Id));
 
             return employees;
         }
@@ -61,11 +62,11 @@ namespace Training.Dergai.Lesson4.Services
         public async Task RemoveEmployeeFromOrganizationAsync(Guid organizationId, Guid employeeId)
         {
             var emplOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
-            emplOrgRoles.FindAll(x => x.OrganizationId == organizationId && x.EmployeeId == employeeId);
+            emplOrgRoles = emplOrgRoles.FindAll(x => x.OrganizationId == organizationId && x.EmployeeId == employeeId);
 
             foreach (var empOrgRole in emplOrgRoles)
             {
-               await EmployeeOrganizationRoleRepository.RemoveAsync(empOrgRole);
+                await EmployeeOrganizationRoleRepository.RemoveAsync(empOrgRole);
             }
         }
     }

@@ -42,9 +42,9 @@ namespace Training.Dergai.Lesson4.Presentation
             var employeeService = serviceProvider.GetService<IEmployeeService>();
 
             await employeeService.CreateEmployeeAsync(employee);
-            await employeeService .CreateEmployeeAsync(jove);
+            await employeeService.CreateEmployeeAsync(jove);
 
-            var employees = employeeService.GetAllEmployeesAsync();
+            var employees = await employeeService.GetAllEmployeesAsync();
 
             Console.WriteLine(JsonSerializer.Serialize(employees));
 
@@ -56,7 +56,7 @@ namespace Training.Dergai.Lesson4.Presentation
             await organizationService.AddEmployeeToOrganizationAsync(honda.Id, employee.Id, role.Id);
             await organizationService.AssignNewRoleAsync(honda.Id, jove.Id, manager.Id);
 
-            var employeesForHonda = organizationService.GetEmployeesForOrganizationAsync(honda.Id);
+            var employeesForHonda = await organizationService.GetEmployeesForOrganizationAsync(honda.Id);
 
             Console.WriteLine(JsonSerializer.Serialize(employeesForHonda));
 
