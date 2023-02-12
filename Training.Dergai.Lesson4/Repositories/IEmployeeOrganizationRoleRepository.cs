@@ -9,12 +9,12 @@ namespace Training.Dergai.Lesson4.Repositories
 {
     public interface IEmployeeOrganizationRoleRepository
     {
-        public void Add(EmployeeOrganizationRole employeeOrganizationRole);
+        public Task AddAsync(EmployeeOrganizationRole employeeOrganizationRole);
 
-        public void Remove(EmployeeOrganizationRole employeeOrganizationRole);
+        public Task RemoveAsync(EmployeeOrganizationRole employeeOrganizationRole);
 
-        public List<EmployeeOrganizationRole> GetAll();
+        public Task<List<EmployeeOrganizationRole>> GetAllAsync();
 
-        public void Update(EmployeeOrganizationRole employeeOrganizationRole);
+        public Task UpdateAsync(EmployeeOrganizationRole employeeOrganizationRole);
     }
 }

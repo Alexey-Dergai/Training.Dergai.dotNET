@@ -12,23 +12,21 @@ namespace Training.Dergai.Lesson4.Repositories
 {
     public class EmployeeOrganizationRoleRepository : IEmployeeOrganizationRoleRepository
     {
-        
         private readonly string Path = Directory.GetCurrentDirectory() + @"\EmployeeOrganizationRole.txt";
-        
 
-        public void Add(EmployeeOrganizationRole employeeOrganizationRole)
+        public async Task AddAsync(EmployeeOrganizationRole employeeOrganizationRole)
         {
             var json = JsonSerializer.Serialize(employeeOrganizationRole);
 
             using (var sw = new StreamWriter(Path, true))
             {
-                sw.WriteLine(json);
+                await sw.WriteLineAsync(json);
             }
         }
 
-        public void Remove(EmployeeOrganizationRole employeeOrganizationRole)
+        public async Task RemoveAsync(EmployeeOrganizationRole employeeOrganizationRole)
         {
-            var employeeOrganizationRoles = GetAll();
+            var employeeOrganizationRoles = await GetAllAsync();
 
             employeeOrganizationRoles.RemoveAll(x => x.EmployeeId == employeeOrganizationRole.EmployeeId && x.OrganizationId == employeeOrganizationRole.OrganizationId && x.RoleId == employeeOrganizationRole.RoleId);
 
@@ -38,12 +36,12 @@ namespace Training.Dergai.Lesson4.Repositories
                 {
                     var json = JsonSerializer.Serialize(eor);
 
-                    sw.WriteLine(json);
+                    await sw.WriteLineAsync(json);
                 }
             }
         }
 
-        public List<EmployeeOrganizationRole> GetAll()
+        public async Task<List<EmployeeOrganizationRole>> GetAllAsync()
         {
             var employeeOrganizationRoles = new List<EmployeeOrganizationRole>();
 
@@ -51,19 +49,20 @@ namespace Training.Dergai.Lesson4.Repositories
             {
                 string line;
 
-                while ((line = sr.ReadLine()) != null)
+                while ((line = await sr.ReadLineAsync()) != null)
                 {
                     var employeeOrganizationRole = JsonSerializer.Deserialize<EmployeeOrganizationRole>(line);
 
                     employeeOrganizationRoles.Add(employeeOrganizationRole);
                 }
             }
+
             return employeeOrganizationRoles;
         }
 
-        public void Update(EmployeeOrganizationRole employeeOrganizationRole)
+        public async Task UpdateAsync(EmployeeOrganizationRole employeeOrganizationRole)
         {
-            var employeeOrganizationRoles = GetAll();
+            var employeeOrganizationRoles = await GetAllAsync();
 
             employeeOrganizationRoles.RemoveAll(x => x.EmployeeId == employeeOrganizationRole.EmployeeId && x.OrganizationId == employeeOrganizationRole.OrganizationId && x.RoleId == employeeOrganizationRole.RoleId);
             employeeOrganizationRoles.Add(employeeOrganizationRole);
@@ -74,7 +73,7 @@ namespace Training.Dergai.Lesson4.Repositories
                 {
                     var json = JsonSerializer.Serialize(eor);
 
-                    sw.WriteLine(json);
+                    await sw.WriteLineAsync(json);
                 }
             }
         }

@@ -12,19 +12,29 @@ namespace Training.Dergai.Lesson4.Repositories
     {
         private readonly string Path = Directory.GetCurrentDirectory() + @"\Organization.txt";
 
-        public void Add(Organization organization)
+        public async Task AddAsync(Organization organization)
         {
-            var json = JsonSerializer.Serialize(organization);
-
-            using (var sw = new StreamWriter(Path, true))
+            using (var stream = new MemoryStream())
             {
-                sw.WriteLine(json);
+                await JsonSerializer.SerializeAsync<Organization>(stream, organization);
+
+                stream.Position = 0;
+
+                using var reader = new StreamReader(stream);
+                {
+                    var json = await reader.ReadToEndAsync();
+
+                    using (var sw = new StreamWriter(Path, true))
+                    {
+                        await sw.WriteLineAsync(json);
+                    }
+                }
             }
         }
 
-        public void Remove(Organization organization)
+        public async Task RemoveAsync(Organization organization)
         {
-            var organizations = GetAll();
+            var organizations = await GetAllAsync();
 
             organizations.RemoveAll(x => x.Id == organization.Id);
 
@@ -34,12 +44,12 @@ namespace Training.Dergai.Lesson4.Repositories
                 {
                     var json = JsonSerializer.Serialize(org);
 
-                    sw.WriteLine(json);
+                    await sw.WriteLineAsync(json);
                 }
             }
         }
 
-        public List<Organization> GetAll()
+        public async Task<List<Organization>> GetAllAsync()
         {
             var organizations = new List<Organization>();
 
@@ -47,7 +57,7 @@ namespace Training.Dergai.Lesson4.Repositories
             {
                 string line;
 
-                while ((line = sr.ReadLine()) != null)
+                while ((line = await sr.ReadLineAsync()) != null)
                 {
                     var organization = JsonSerializer.Deserialize<Organization>(line);
 
@@ -57,9 +67,9 @@ namespace Training.Dergai.Lesson4.Repositories
             return organizations;
         }
 
-        public void Update(Organization organization)
+        public async Task UpdateAsync(Organization organization)
         {
-            var organizations = GetAll();
+            var organizations = await GetAllAsync();
 
             organizations.RemoveAll(x => x.Id == organization.Id);
             organizations.Add(organization);
@@ -70,7 +80,7 @@ namespace Training.Dergai.Lesson4.Repositories
                 {
                     var json = JsonSerializer.Serialize(org);
 
-                    sw.WriteLine(json);
+                    await sw.WriteLineAsync(json);
                 }
             }
         }
