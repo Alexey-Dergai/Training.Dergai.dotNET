@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Training.Dergai.Lesson4.Models;
 
@@ -9,26 +7,28 @@ namespace Training.Dergai.Lesson4.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        private List<Role> Roles { get; set; }
-
-        public RoleRepository()
+        public RoleRepository(ApplicationDbContext applicationDbContext)
         {
-            Roles = new List<Role>();
+            ApplicationDbContext = applicationDbContext;
         }
 
-        public void Add(Role role)
+        private ApplicationDbContext ApplicationDbContext { get; }
+
+        public async Task AddAsync(Role role)
         {
-            Roles.Add(role);
+            await ApplicationDbContext.Roles.AddAsync(role);
+            await ApplicationDbContext.SaveChangesAsync();
         }
 
-        public void Remove(Role role)
+        public async Task RemoveAsync(Role role)
         {
-            Roles.Remove(role);
+             ApplicationDbContext.Roles.Remove(role);
+             await ApplicationDbContext.SaveChangesAsync();
         }
 
-        public List<Role> GetAll()
+        public async Task <List<Role>> GetAllAsync()
         {
-            return Roles;
+             return await ApplicationDbContext.Roles.ToListAsync();
         }
     }
 }

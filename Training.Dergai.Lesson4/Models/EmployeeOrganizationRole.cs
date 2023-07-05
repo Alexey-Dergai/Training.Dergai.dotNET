@@ -8,10 +8,20 @@ namespace Training.Dergai.Lesson4.Models
 {
     public class EmployeeOrganizationRole
     {
-        public Guid EmployeeId { get; set; }
+        public int Id { get; set; }
 
-        public Guid OrganizationId { get; set; }
+        public int EmployeeId { get; set; }
 
-        public Guid RoleId { get; set; }
+        public int OrganizationId { get; set; }
+
+        public int RoleId { get; set; }
+
+        public Employee Employee { get; set; } 
+
+        public Organization Organization { get; set; } 
+
+        public Role Role { get; set; } 
+        
+        
     }
 }

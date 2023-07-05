@@ -8,14 +8,10 @@ namespace Training.Dergai.Lesson4.Models
 {
     public class Role
     {
-        public Role()
-        {
-            Id = Guid.NewGuid();
-        }
-
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         
         public string Name { get; set; }
+
+        public ICollection<EmployeeOrganizationRole> EmployeeOrganizationRoles { get; set; }
     }
-    
 }

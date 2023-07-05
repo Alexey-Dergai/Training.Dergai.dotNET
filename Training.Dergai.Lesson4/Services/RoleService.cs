@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Training.Dergai.Lesson4.Models;
 using Training.Dergai.Lesson4.Repositories;
@@ -17,19 +14,19 @@ namespace Training.Dergai.Lesson4.Services
 
         private IRoleRepository RoleRepository { get; }
 
-        public void CreateRole(Role role)
+        public async Task CreateRoleAsync(Role role)
         {
-            RoleRepository.Add(role);
+            await RoleRepository.AddAsync(role);
         }
 
-        public List<Role> GetAllRoles()
+        public async Task<List<Role>> GetAllRoles()
         {
-            return RoleRepository.GetAll();
+            return await RoleRepository.GetAllAsync();
         }
 
-        public void RemoveRole(Role role)
+        public async Task RemoveRoleAsync(Role role)
         {
-            RoleRepository.Remove(role);
+            await RoleRepository.RemoveAsync(role);
         }
     }
 }
