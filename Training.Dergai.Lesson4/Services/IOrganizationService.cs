@@ -10,12 +10,12 @@ namespace Training.Dergai.Lesson4.Services
     {
         Task CreateOrganizationAsync(Organization organization);
 
-        Task<List<Employee>> GetEmployeesForOrganizationAsync(Guid organizationId);
+        Task<List<Employee>> GetEmployeesForOrganizationAsync(int organizationId);
 
-        Task RemoveEmployeeFromOrganizationAsync(Guid organizationId, Guid employeeId);
+        Task RemoveEmployeeFromOrganizationAsync(int organizationId, int employeeId);
 
-        Task AddEmployeeToOrganizationAsync(Guid organizationId, Guid employeeId, Guid roleId);
+        Task AddEmployeeToOrganizationAsync(int organizationId, int employeeId, int roleId);
 
-        Task AssignNewRoleAsync(Guid organizationId, Guid employeeId, Guid roleId);
+        Task AssignNewRoleAsync(int organizationId, int employeeId, int roleId);
     }
 }

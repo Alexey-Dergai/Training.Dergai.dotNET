@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,21 +13,14 @@ namespace Training.Dergai.Lesson4.Presentation
     {
         public static async Task Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
-                .AddSingleton<IRoleRepository, RoleRepository>()
-                .AddSingleton<IEmployeeRepository, EmployeeRepository>()
-                .AddSingleton<IOrganizationRepository, OrganizationRepository>()
-                .AddSingleton<IEmployeeOrganizationRoleRepository, EmployeeOrganizationRoleRepository>()
-                .AddSingleton<IRoleService, RoleService>()
-                .AddSingleton<IEmployeeService, EmployeeService>()
-                .AddSingleton<IOrganizationService, OrganizationService>()
-                .BuildServiceProvider();
-
+            var serviceProvider = ConfigureServices();
             var roleService = serviceProvider.GetService<IRoleService>();
+
             var role = new Role { Name = "Developer" };
             var manager = new Role { Name = "Manager" };
 
-            roleService.CreateRole(role);
+            await roleService.CreateRoleAsync(role);
+            await roleService.CreateRoleAsync(manager);
 
             role.Name = "QA";
 
@@ -46,7 +40,10 @@ namespace Training.Dergai.Lesson4.Presentation
 
             var employees = await employeeService.GetAllEmployeesAsync();
 
-            Console.WriteLine(JsonSerializer.Serialize(employees));
+            foreach (var emp in employees)
+            {
+                Console.WriteLine($"{emp.Name}:{emp.Age}");
+            }
 
             jove.Age = 20;
 
@@ -58,12 +55,30 @@ namespace Training.Dergai.Lesson4.Presentation
 
             var employeesForHonda = await organizationService.GetEmployeesForOrganizationAsync(honda.Id);
 
-            Console.WriteLine(JsonSerializer.Serialize(employeesForHonda));
+            foreach (var emp in employeesForHonda)
+            {
+                Console.WriteLine($"{emp.Name}:{emp.Age}");
+            }
 
             await organizationService.RemoveEmployeeFromOrganizationAsync(honda.Id, jove.Id);
 
             Console.ReadKey();
         }
 
+        private static ServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<IEmployeeOrganizationRoleRepository, EmployeeOrganizationRoleRepository>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
+
+            services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(@"Server=.\;Database=OrganizationsManagementSystem;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;"));
+            return services.BuildServiceProvider();
+        }
     }
 }

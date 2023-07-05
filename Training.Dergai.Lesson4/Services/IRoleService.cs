@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Training.Dergai.Lesson4.Models;
 
@@ -9,10 +6,10 @@ namespace Training.Dergai.Lesson4.Services
 {
     public interface IRoleService
     {
-        void CreateRole(Role role);
+        Task CreateRoleAsync(Role role);
 
-        void RemoveRole(Role role);
+        Task RemoveRoleAsync(Role role);
 
-        List<Role> GetAllRoles();
+        Task<List<Role>> GetAllRoles();
     }
 }

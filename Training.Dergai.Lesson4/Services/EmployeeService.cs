@@ -24,9 +24,9 @@ namespace Training.Dergai.Lesson4.Services
             await EmployeeRepository.AddAsync(employee);
         }
 
-        public Task<List<Employee>> GetAllEmployeesAsync()
+        public async Task<List<Employee>> GetAllEmployeesAsync()
         {
-            return EmployeeRepository.GetAllAsync();
+            return await EmployeeRepository.GetAllAsync();
         }
 
         public async Task RemoveEmployeeAsync(Employee employee)

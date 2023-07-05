@@ -25,7 +25,7 @@ namespace Training.Dergai.Lesson4.Services
 
         private IEmployeeOrganizationRoleRepository EmployeeOrganizationRoleRepository { get; }
 
-        public async Task AddEmployeeToOrganizationAsync(Guid organizationId, Guid employeeId, Guid roleId)
+        public async Task AddEmployeeToOrganizationAsync(int organizationId, int employeeId, int roleId)
         {
             var employeeOrgRole = new EmployeeOrganizationRole
             {
@@ -37,7 +37,7 @@ namespace Training.Dergai.Lesson4.Services
             await EmployeeOrganizationRoleRepository.AddAsync(employeeOrgRole);
         }
 
-        public async Task AssignNewRoleAsync(Guid organizationId, Guid employeeId, Guid roleId)
+        public async Task AssignNewRoleAsync(int organizationId, int employeeId, int roleId)
         {
             await RemoveEmployeeFromOrganizationAsync(organizationId, employeeId);
             await AddEmployeeToOrganizationAsync(organizationId, employeeId, roleId);
@@ -48,7 +48,7 @@ namespace Training.Dergai.Lesson4.Services
             await OrganizationRepository.AddAsync(organization);
         }
 
-        public async Task<List<Employee>> GetEmployeesForOrganizationAsync(Guid organizationId)
+        public async Task<List<Employee>> GetEmployeesForOrganizationAsync(int organizationId)
         {
             var empOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
             empOrgRoles = empOrgRoles.FindAll(e => e.OrganizationId == organizationId);
@@ -59,7 +59,7 @@ namespace Training.Dergai.Lesson4.Services
             return employees;
         }
 
-        public async Task RemoveEmployeeFromOrganizationAsync(Guid organizationId, Guid employeeId)
+        public async Task RemoveEmployeeFromOrganizationAsync(int organizationId, int employeeId)
         {
             var emplOrgRoles = await EmployeeOrganizationRoleRepository.GetAllAsync();
             emplOrgRoles = emplOrgRoles.FindAll(x => x.OrganizationId == organizationId && x.EmployeeId == employeeId);
